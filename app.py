@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Importamos pickle para poder cargar el archivo model.pkl
 import pickle
 
@@ -5,12 +6,20 @@ import pickle
 # jsonify para devolver respuestas en formato JSON,
 # y request para leer datos que envía el usuario
 from flask import Flask, jsonify, request
+=======
+# Flask API with 4 endpoints:
+
+from flask import Flask, request, jsonify
+import joblib
+import numpy as np
+>>>>>>> 242027fbafe57f5db4a552099bdf789bf2434148
 import pandas as pd
 
 # Creamos la aplicación Flask
 # __name__ le indica a Flask dónde está el archivo principal
 app = Flask(__name__)
 
+<<<<<<< HEAD
 # Esto activa el modo debug, muestra errores más detallados cuando estoy programando
 app.config["DEBUG"] = False
 
@@ -54,12 +63,17 @@ def home():
 # Para comprobar rápidamente si la API está funcionando
 # Sólo significa que el proceso Flask está vivo y puede responder una petición HTTP en esa ruta
 @app.route("/health", methods=["GET"])
+=======
+# 1) /health (GET) — checks the API is running and the model is loaded
+@app.route('/health', methods = ['GET'])
+>>>>>>> 242027fbafe57f5db4a552099bdf789bf2434148
 def health():
     return jsonify({
         "status": "ok",
         "service": "running"
     })
 
+<<<<<<< HEAD
 
 # Ruta con parámetro en el path, para recibir por ejemplo el nombre de un barrio
 # Ejemplo: /neighbourhood/Sol
@@ -127,6 +141,22 @@ def predict_query():
         return jsonify({"error": str(e)}), 400
 
 @app.route("/predict", methods=["POST"])
+=======
+# 2) /predict/<neighbourhood> (GET) — path parameter endpoint, redirects to POST for full prediction
+@app.route('/predict/<neighbourhood>', methods = ['GET'])
+def predict_by_neighbourhood(neighbourhood):
+    return jsonify({'neighbourhood': neighbourhood, 'message': 'Use POST /predict for full prediction'})
+
+# 3) /listings (GET) — query parameter endpoint, filters listings by room type
+@app.route('/listings', methods = ['GET'])
+def listings():
+    room_type = request.args.get('room_type', 'all')
+    return jsonify({'room_type': room_type, 'message': f'Listings filtered by room_type: {room_type}'})
+
+# 4) /predict (POST) — main endpoint: receives listing data as JSON, encodes it,
+#                   aligns it with the training columns and returns a predicted nightly price
+@app.route('/predict', methods = ['POST'])
+>>>>>>> 242027fbafe57f5db4a552099bdf789bf2434148
 def predict():
     try:
         data = request.get_json()
