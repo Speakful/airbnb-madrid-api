@@ -1,3 +1,5 @@
+# Flask API with 4 endpoints:
+
 from flask import Flask, request, jsonify
 import joblib
 import numpy as np
@@ -6,19 +8,24 @@ import pandas as pd
 app = Flask(__name__)
 model = joblib.load('model/model.pkl')
 
+# 1) /health (GET) — checks the API is running and the model is loaded
 @app.route('/health', methods = ['GET'])
 def health():
     return jsonify({'status': 'ok', 'model': 'loaded'})
 
+# 2) /predict/<neighbourhood> (GET) — path parameter endpoint, redirects to POST for full prediction
 @app.route('/predict/<neighbourhood>', methods = ['GET'])
 def predict_by_neighbourhood(neighbourhood):
     return jsonify({'neighbourhood': neighbourhood, 'message': 'Use POST /predict for full prediction'})
 
+# 3) /listings (GET) — query parameter endpoint, filters listings by room type
 @app.route('/listings', methods = ['GET'])
 def listings():
     room_type = request.args.get('room_type', 'all')
     return jsonify({'room_type': room_type, 'message': f'Listings filtered by room_type: {room_type}'})
 
+# 4) /predict (POST) — main endpoint: receives listing data as JSON, encodes it,
+#                   aligns it with the training columns and returns a predicted nightly price
 @app.route('/predict', methods = ['POST'])
 def predict():
     data = request.get_json()
