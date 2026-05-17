@@ -20,7 +20,7 @@ app.config["DEBUG"] = False
 # Cargamos el "modelo" al iniciar la aplicación
 # Esto hace que el modelo se lea una sola vez al arrancar la API
 # y no en cada petición
-with open("model.pkl", "rb") as f:
+with open("model/model.pkl", "rb") as f:
     model = pickle.load(f)
 
 
