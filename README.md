@@ -1,25 +1,40 @@
-🏠 Airbnb Madrid — Price Predictor API
+# 🏠 Airbnb Madrid — Price Predictor API
+
 A Flask REST API that predicts Airbnb nightly prices in Madrid using a Random Forest Regressor trained on Inside Airbnb data.
 
-👥 Team
+---
 
-Edu
-Ariela
+## 👥 Team
 
+- Edu
+- Ariela
 
-🤖 Model
+---
 
-Algorithm: Random Forest Regressor (sklearn)
-Dataset: Inside Airbnb — Madrid (detailed listings)
-Features: neighbourhood, room type, accommodates, bathrooms, bedrooms, beds, minimum nights, number of reviews, review scores rating, availability
-R² Score: 0.61 | MAE: €27 | RMSE: €37
+## 🤖 Model
 
+- **Algorithm:** Random Forest Regressor (sklearn)
+- **Dataset:** Inside Airbnb — Madrid (detailed listings)
+- **Features:** neighbourhood, room type, accommodates, bathrooms, bedrooms, beds, minimum nights, number of reviews, review scores rating, availability
+- **R² Score:** 0.61 | **MAE:** €27 | **RMSE:** €37
 
-🚀 API Endpoints
-MethodRouteTypeDescriptionGET/health—Returns API status and model load confirmationGET/predict/<neighbourhood>Path paramQuick price estimate for a given neighbourhoodGET/listings?room_type=entireQuery paramReturns listings filtered by room typePOST/predictJSON bodyFull price prediction using all features
+---
 
-📨 Example Request
-bashPOST /predict
+## 🚀 API Endpoints
+
+| Method | Route | Type | Description |
+|--------|-------|------|-------------|
+| GET | `/health` | — | Returns API status and model load confirmation |
+| GET | `/predict/<neighbourhood>` | Path param | Quick price estimate for a given neighbourhood |
+| GET | `/listings?room_type=entire` | Query param | Returns listings filtered by room type |
+| POST | `/predict` | JSON body | Full price prediction using all features |
+
+---
+
+## 📨 Example Request
+
+```bash
+POST /predict
 Content-Type: application/json
 
 {
@@ -34,42 +49,55 @@ Content-Type: application/json
   "review_scores_rating": 4.8,
   "availability_365": 180
 }
-📨 Example Response
-json{
+```
+
+## 📨 Example Response
+
+```json
+{
   "predicted_price": 116.11
 }
+```
 
-🛠️ Run Locally
+---
 
-Clone the repository
+## 🛠️ Run Locally
 
-bashgit clone https://github.com/Speakful/airbnb-madrid-api.git
+1. Clone the repository
+```bash
+git clone https://github.com/Speakful/airbnb-madrid-api.git
 cd airbnb-madrid-api
+```
 
-Install dependencies
+2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-bashpip install -r requirements.txt
+3. Run the app
+```bash
+python app.py
+```
 
-Run the app
+4. API will be available at `http://127.0.0.1:5000`
 
-bashpython app.py
+---
 
-API will be available at http://127.0.0.1:5000
+## ☁️ Deployment
 
+Deployed on **Render** and **AWS EC2**.
 
-☁️ Deployment
-Deployed on Render and AWS EC2.
+- Render: https://online-ds-bridge-proyects-arielaastorga.onrender.com
+- AWS: http://13.60.90.39
 
-Render: https://online-ds-bridge-proyects-arielaastorga.onrender.com
-AWS: http://13.60.90.39
+---
 
+## 🧰 Tech Stack
 
-🧰 Tech Stack
-
-Python
-Flask
-scikit-learn
-pandas
-joblib
-gunicorn
-Render / AWS EC2
+- Python
+- Flask
+- scikit-learn
+- pandas
+- joblib
+- gunicorn
+- Render / AWS EC2
